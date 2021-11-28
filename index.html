@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP >
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"-->
+    <title>Study Manager</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/color-calendar/dist/css/theme-basic.css"/>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <span class="background_3"></span>
+    <span class="background_4"></span>
+    <img class="img_tree" src="https://s1.uphinh.org/2021/10/30/1635594166097.png" alt="Tree"/>
+    <img class="img_cokoo_clock" src="https://s1.uphinh.org/2021/10/30/1635602604409.png" alt="Cokoo Clock"/>
+
+    <!--img src="https://s1.uphinh.org/2021/10/30/1635594166097.png" alt="Tree"/-->
+    <div class="content">
+      
+      <div class="menu-btn"><div class="menu-btn__burger"></div></div>
+      <div class="menu">
+        <div class="profile">
+          <a class="nameUser">Tên người dùng</a>
+          <img src="https://thuthuatnhanh.com/wp-content/uploads/2019/04/hinh-anh-chibi-meo-cute-580x580.jpg" alt="Avatar" class="avtUser"/>
+        </div>
+        <ul class="listMenu">
+          <li>Hướng dẫn</li>
+          <li>Hỏi đáp</li>
+          <li>Cài đặt</li>
+        </ul>
+        <img src="https://s1.uphinh.org/2021/11/02/1635817118743.png" alt="Books" class="books_img"/>
+      </div>
+      <div class="contain">
+        <div class="calendar_ct">
+          <div class="line1">
+            <ion-icon class="calendar_icon" name="calendar-outline"></ion-icon>
+            <a class="day1 day">7<br>Mon<a>
+            <a class="day2 day">8<br>Tue<a>
+            <a class="day3 day">9<br>Wed<a>
+            <a class="day4 day">10<br>Fri<a>
+          </div>
+          <div class="line2">
+            <a class="write_time-btn">Bản ghi thời gian<a>
+            <a class="day5 day">11<br>Thur<a>
+            <a class="day6 day">12<br>Sat<a>
+            <a class="day7 day">13<br>Sun<a>
+          </div>
+        </div>
+        <a class="evaluate-btn">Đánh giá kết quả gần đây</a>
+        <div class="aso-btn">
+          <a>Ứng dụng học Online</a>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSVjsO2Y-XIBzssxFyrvbkf0mdV_mUrMLvzw&usqp=CAU" alt="ZoomLogo" />
+        </div>
+        <div class="calendar_info">
+          <div class="top">
+            <a class="today">Today</a>
+            <a class="data_day"></a>
+            <br><br>
+            <a class="day"></a>
+            <br>
+            <a class="week"></a>
+          </div>
+          <div class="info">
+            <h3 class="scheduleH3">Lịch học</h3>
+            <ul class="schedule"></ul>
+            <h3 class="free_timeH3">Tự do</h3>
+            <ul class="free_time"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="process-windown" id="process-windown">
+      <ion-icon class="closePr" id="closePr" name="close-outline" size="large"></ion-icon>
+      <div id="calendar_small" class="calendar_small"></div>
+      <div id="calendar_hide" class="calendar_hide"></div>
+      <div id="input_info" class="input_info">
+        <a class="data_cache"></a>
+        <textarea rows="25" cols="50" placeholder="Nội dung ở trên 1 dòng trống sẽ được xem là 1 ý"></textarea>
+        <div class="btn_input">
+          <a class="btn_ip btn_save">Lưu lại</a>
+
+          <a class="btn_ip btn_cancel">Hủy bỏ</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/color-calendar/dist/bundle.js"></script>
+
+    <script src="./renderer.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

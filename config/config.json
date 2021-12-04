@@ -3,8 +3,8 @@
 	"className": "10 Tin",
 	"school": "THCS chuyên Lương Văn Chánh",
 	"studyProgram": ["chrome.exe", "teams.exe"],
-	"timeStart": ["7:0", "7:0", "7:0", "7:0", "17:26", "7:0"],
-	"timeEnd": ["10:30", "10:30", "10:30", "10:30", "18:30", "10:30"],
+	"timeStart": ["7:0", "7:0", "7:0", "7:0", "17:26", "13:0"],
+	"timeEnd": ["10:30", "10:30", "10:30", "10:30", "18:30", "23:30"],
 	"dowStudy": [1, 2, 3, 4, 5, 6],
 	"parent": "tv2952018@gmail.com",
 	"teacher": "nhtienlam@gmail.com"

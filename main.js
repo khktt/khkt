@@ -63,11 +63,13 @@ if (config.dowStudy.indexOf(dayOfWeek) != -1){
   dateNowJS.setHours(hourStart);
   dateNowJS.setMinutes(minStart);
   let timeStartJS = dateNowJS.getTime();
+  global.timeStartJS = dateNowJS.getTime();
 
   var dateEndJS = new Date(dateNow.ts);
   dateEndJS.setHours(hourEnd);
   dateEndJS.setMinutes(minEnd);
   let timeEndJS = dateEndJS.getTime();
+  global.timeEndJS = dateEndJS.getTime();
 
   if (dateNow.ts<=timeStartJS){
     console.log(dateNow.minute);
@@ -245,7 +247,7 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', async function () {
   var sendC = `-Học sinh: ${config.name}\n-Lớp: ${config.className}\n-Trường: ${config.school}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n Học sinh này đã đóng ứng dụng quản lý vào lúc ${dateNow.hour} giờ ${dateNow.minute} phút.`;
   var dateNowJS = new Date(dateNow.ts);
   dateNowJS.setHours(hourStart);
@@ -258,19 +260,23 @@ app.on('window-all-closed', function () {
   let timeEndJS = dateEndJS.getTime();
 
   if (dateNow.ts>=timeStartJS && dateNow.ts<=timeEndJS){
-  sendP({
+    console.log("close");
+
+  await sendP({
     text: sendC,  
   }, (error, result, fullResult) => {
     if (error) console.error(error);
     console.log(result+"(parent)");
   })
 
-  sendT({
+  await sendT({
     text: sendC,  
   }, (error, result, fullResult) => {
     if (error) console.error(error);
     console.log(result+"(teacher)");
   })}
+
+  await new Promise(x=>setTimeout(x, 5000));
   if (process.platform !== 'darwin') app.quit()
 })
 
@@ -299,7 +305,10 @@ let listAppRunning;
 setInterval(async function () {
   var list = await getProcess();
 
+  console.log("checking...")
+
   if (list.length > listAppRunning.length){
+    console.log("appS");
     var listStart = '';
     var z=0;
     for(var i of list){
@@ -310,7 +319,7 @@ setInterval(async function () {
     }
 
     var sendC = `-Học sinh: ${config.name}\n-Lớp: ${config.className}\n-Trường: ${config.school}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n Học sinh này đã khởi động 1(vài) ứng dụng vào lúc ${dateNow.hour} giờ ${dateNow.minute} phút. Danh sách:\n`+listStart;
-    if (dateNow.ts>=timeStartJS && dateNow.ts<=timeEndJS){
+    if (dateNow.ts>=global.timeStartJS && dateNow.ts<=global.timeEndJS){
       sendP({
         text: sendC,  
       }, (error, result, fullResult) => {
@@ -328,6 +337,7 @@ setInterval(async function () {
     listAppRunning = list;
   }
   if (list.length < listAppRunning.length){
+    console.log("appC")
     var listStop = '';
     var z=0;
     for(var i of listAppRunning){
@@ -339,7 +349,7 @@ setInterval(async function () {
 
     var sendC = `-Học sinh: ${config.name}\n-Lớp: ${config.className}\n-Trường: ${config.school}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n Học sinh này đã đóng 1(vài) ứng dụng vào lúc ${dateNow.hour} giờ ${dateNow.minute} phút. Danh sách:\n`+listStop;
 
-    if (dateNow.ts>=timeStartJS && dateNow.ts<=timeEndJS){
+    if (dateNow.ts>=global.timeStartJS && dateNow.ts<=global.timeEndJS){
       sendP({
         text: sendC,  
       }, (error, result, fullResult) => {
@@ -355,6 +365,6 @@ setInterval(async function () {
       })
     }
 
-    list = listAppRunning;
+    listAppRunning = list;
   }
-},1000)
+},5000)

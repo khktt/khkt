@@ -227,18 +227,15 @@ document.querySelector(`.btn_save`).onclick = function (){
   document.getElementById("input_info").style.display = "none";
 }
 
-let list;
 
-sis.processes().then(data => list=data.list);
-function tet() {
-  sis.processes().then(data => list=data.list);
+async function tet() {
+  var list = await (sis.processes()).list;
   var run = [];
   for(var i of list){
-
     if(run.indexOf(i.name)==-1){
       if(i.path != "" && i.path.toLowerCase().indexOf("system32") == -1&&i.name!=""){
-
-        run.push(i.name);      }
+        run.push(i.name);      
+      }
     }
   }
   console.log(run);

@@ -227,16 +227,65 @@ document.querySelector(`.btn_save`).onclick = function (){
   document.getElementById("input_info").style.display = "none";
 }
 
+var config = JSON.parse(fs.readFileSync("./config/config.json"));
 
-async function tet() {
-  var list = await (sis.processes()).list;
-  var run = [];
-  for(var i of list){
-    if(run.indexOf(i.name)==-1){
-      if(i.path != "" && i.path.toLowerCase().indexOf("system32") == -1&&i.name!=""){
-        run.push(i.name);      
-      }
+var unStudy, sendNT;
+
+var ssh;
+var ssm;
+
+var esh;
+var esm;
+
+if(config.dowStudy.indexOf(new Date().getDay()) != -1){
+  ssh = Number(config.timeStart[config.dowStudy.indexOf(new Date().getDay())].split(":")[0]);
+  ssm = Number(config.timeStart[config.dowStudy.indexOf(new Date().getDay())].split(":")[1]);
+
+  esh = Number(config.timeEnd[config.dowStudy.indexOf(new Date().getDay())].split(":")[0]);
+  esm = Number(config.timeEnd[config.dowStudy.indexOf(new Date().getDay())].split(":")[1]);
+  snoti(random(config.sendNoti[0], config.sendNoti[1]));
+
+}
+
+function snoti(n) {
+  sendNT = setTimeout(function () {
+    unStudy = setTimeout(function () {
+      var sendC = `-Học sinh: ${config.name}\n-Lớp: ${config.className}\n-Trường: ${config.school}\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n Học sinh này hiện không có mặt`;
+      ipc.send("sendEmail", sendC);
+    }, 15*1000)
+
+    console.log(ssh, ssm,  esh,new Date().getMinutes(), esm, 0)
+
+    if((new Date().getHours() < ssh) || (new Date().getHours() == ssh && new Date().getMinutes() < ssm) || (new Date().getHours() == esh && new Date().getMinutes() > esm) || (new Date().getHours() > esh)){
+      console.log(ssh, ssm, esh, esm, 1)
+      clearTimeout(unStudy);
+      return snoti(random(config.sendNoti[0], config.sendNoti[1]));
     }
-  }
-  console.log(run);
+    
+    for (var i = 0 ; i < config.startBreakTime.length; i++) {
+      var sbth = Number(config.startBreakTime[i].split(":")[0]);
+      var sbtm = Number(config.startBreakTime[i].split(":")[1]);
+
+      var ebth = Number(config.endBreakTime[i].split(":")[0]);
+      var ebtm = Number(config.endBreakTime[i].split(":")[1]);
+      if(((new Date().getHours() == sbth && new Date().getMinutes() >= sbtm)||new Date().getHours() > sbth) && ((new Date().getHours() == ebth && new Date().getMinutes() <= ebtm)||new Date().getHours() < ebth)) {
+        clearTimeout(unStudy);
+        return snoti(random(config.sendNoti[0], config.sendNoti[1]));
+      };
+    }
+
+    var noti2 = setTimeout(()=>{new Notification("Xác nhận!", {body: "Vui lòng click vào thông báo này để xác nhận bạn vẫn còn trong tiết học!", timeoutType: "default"}).onclick = () => clearTimeout(unStudy)}, 6*1000)
+    new Notification("Xác nhận!", {body: "Vui lòng click vào thông báo này để xác nhận bạn vẫn còn trong tiết học!", timeoutType: "default"}).onclick = () => {clearTimeout(unStudy); clearTimeout(noti2)};
+    
+    snoti(random(config.sendNoti[0], config.sendNoti[1]))
+  }, n*60*1000)
+}
+
+function random(min, max, int) {
+  if (int == undefined) {int =  true};
+  return require("random-number")({
+    min: min,
+    max: max,
+    integer: int
+  })
 }

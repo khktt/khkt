@@ -227,6 +227,10 @@ function createWindow () {
 	  mainWindow.webContents.send("calender.data", clddt)
   })
 
+  ipc.on("sendEmail", (event, data)=>{
+    sendEmaill(data);
+  })
+
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 }
@@ -368,3 +372,19 @@ setInterval(async function () {
     listAppRunning = list;
   }
 },5000)
+
+function sendEmaill(data) {
+  sendP({
+    text: data,  
+  }, (error, result, fullResult) => {
+    if (error) console.error(error);
+    console.log(result+"(parent)");
+  })
+
+  sendT({
+    text: data,  
+  }, (error, result, fullResult) => {
+    if (error) console.error(error);
+    console.log(result+"(teacher)");
+  });
+}

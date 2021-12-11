@@ -213,6 +213,7 @@ function createWindow () {
     height: 720,
     minWidth: 1195,
     minHeight: 720,
+    icon: "./icon/icon_app.jpg",
     webPreferences: {
       //preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,

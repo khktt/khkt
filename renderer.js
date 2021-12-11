@@ -289,3 +289,8 @@ function random(min, max, int) {
     integer: int
   })
 }
+
+function sendNoti() {
+  var noti2 = setTimeout(()=>{new Notification("Xác nhận!", {body: "Vui lòng click vào thông báo này để xác nhận bạn vẫn còn trong tiết học!", timeoutType: "default"}).onclick = () => clearTimeout(unStudy)}, 6*1000)
+  new Notification("Xác nhận!", {body: "Vui lòng click vào thông báo này để xác nhận bạn vẫn còn trong tiết học!", timeoutType: "default"}).onclick = () => {clearTimeout(unStudy); clearTimeout(noti2)};
+}
